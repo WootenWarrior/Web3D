@@ -7,5 +7,13 @@ canvas {
 }
 
 #threejs-container {
-    height: 100vh;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color: black;
+    position: relative;
+    z-index: -1;
 }
