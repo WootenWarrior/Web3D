@@ -11,9 +11,6 @@ camera.position.z = 5;
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6); // Sky color, ground color, intensity
-scene.add(hemisphereLight);
-
 const loader = new GLTFLoader();
 let bottleModel;
 loader.load("assets/bottle.glb", function (gltf) {
