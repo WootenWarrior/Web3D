@@ -1,19 +1,44 @@
 body {
-    margin: 0; overflow: hidden;
+    --navbar-height: 5rem;
+    margin: 0;
 }
 
 canvas {
     display: block;
+    z-index: -1;
+}
+
+.logo-text {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2.5rem;
+    color: #000;
+}
+
+.logo-font {
+    font-family: 'Luckiest Guy', cursive;
 }
 
 #threejs-container {
-    height: 90vh;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto;
-    background-color: black;
+    background-color: blue;
     position: relative;
     z-index: -1;
+}
+
+#about-page, #main-page {
+    display: none;
+}
+
+#about-page.active, #main-page.active {
+    display: block;
+}
+
+.card-img-top { 
+    height: 400px;
+    object-fit: fill;
 }
