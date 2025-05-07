@@ -12,6 +12,9 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+const bottomLight = new THREE.DirectionalLight(0xffffff, 0.5);
+bottomLight.position.set(0, -5, 0);
+scene.add(bottomLight);
 const loader = new GLTFLoader();
 const clock = new THREE.Clock();
 const listener = new THREE.AudioListener();
@@ -26,8 +29,7 @@ function init() {
     scene.add(ambientLight);
     renderer.setSize(width, height);
     ambientLight.position.set(0,0,0);
-    scene.background = new THREE.Color(0xffcc00);
-    console.log("init")
+    scene.background = new THREE.Color(0x663399);
 }
 init();
 
@@ -42,9 +44,9 @@ function loadModel(modelPath, scale, onLoaded) {
         animations = gltf.animations;
         scene.add(gltf.scene);
 
+        console.log(onLoaded)
         if (onLoaded) onLoaded();
     });
-    console.log(`model ${modelPath} loaded`)
 }
 
 function getModel() {
@@ -120,11 +122,20 @@ spot.add(params.spot, 'helper').onChange(value =>
     lights.spotHelper.visible = value);
 spot.add(params.spot, 'moving');
 
+let spin = false;
+const spinButton = document.getElementById('spin');
+spinButton.addEventListener('click', () => {spin = !spin;});
+
 function animate() {
     if (activeModel) {
         const deltaTime = clock.getDelta();
         if (mixer && animations.length > 0) {
             mixer.update(deltaTime);
+        }
+
+        if (spin) {
+            activeModel.rotation.x = Math.sin(clock.elapsedTime) * 0.5;
+            activeModel.rotation.y += deltaTime * 0.5;
         }
     }
     
@@ -165,7 +176,6 @@ const resetButton = document.getElementById('reset');
 resetButton.addEventListener('click', reset);
 
 function open() {
-    console.log("opened")
     scene.remove(activeModel);
     switch (modelInfo.type) {
         case "bottle":
@@ -186,11 +196,10 @@ function open() {
 }
 
 function crush() {
-    console.log("crushed")
     scene.remove(activeModel);
     switch (modelInfo.type) {
         case "bottle":
-            loadModel("assets/bottlecrush.glb", 0.75, playAnimation);
+            loadModel("assets/bottlecrush2.glb", 0.75, playAnimation);
             playAudio("assets/sounds/crush.mp3");
             break;
         case "can":
@@ -213,7 +222,6 @@ function reset() {
 }
 
 function playAnimation() {
-    console.log(animations)
     animations.forEach(animation => {
         const action = mixer.clipAction(animation);
         action.timeScale = 1;
@@ -225,8 +233,6 @@ function playAnimation() {
 }
 
 document.getElementById('wireframe').addEventListener('click', () => {
-    console.log("wireframe");
-
     activeModel.traverse((child) => {
         if (child.isMesh) {
             child.material.wireframe = !child.material.wireframe;

@@ -47,7 +47,7 @@ canvas {
 }
 
 #control-buttons {
-    position:absolute;
+    position: absolute; 
     width: 200px;
     display: flex;
     justify-content: space-between;
@@ -68,7 +68,7 @@ canvas {
 
 #GUI {
     position: absolute;
-    top: 120px;
-    right: 10px;
+    bottom: 80px;
+    left: 20px;
     z-index: 1000;
 }
