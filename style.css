@@ -90,6 +90,10 @@ canvas {
     color: white !important;
 }
 
-#about-page {
+#about-page-body {
+    background-color: white;
+}
+
+#about-page-html {
     background-color: white;
 }
