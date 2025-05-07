@@ -4,6 +4,11 @@ html, body {
     height: 100%;
     --navbar-height: 5rem;
     z-index: -1;
+    background-color: #663399;
+}
+
+.navbar {
+    background-color: white;
 }
 
 .logo-text {
@@ -14,6 +19,10 @@ html, body {
 
 .logo-font {
     font-family: 'Luckiest Guy', cursive;
+}
+
+#title-banner {
+    padding-top: 1rem;
 }
 
 #threejs-container {
@@ -33,14 +42,6 @@ canvas {
     pointer-events: auto;
 }
 
-#about-page, #main-page {
-    display: none;
-}
-
-#about-page.active, #main-page.active {
-    display: block;
-}
-
 .card-img-top { 
     height: 400px;
     object-fit: fill;
@@ -54,7 +55,7 @@ canvas {
     align-items: center;
     flex-direction: row;
     gap: 2rem;
-    top: calc(2rem + var(--navbar-height));
+    top: calc(1rem + var(--navbar-height));
     left: 2rem;
     z-index: 10;
 }
@@ -64,11 +65,31 @@ canvas {
     border-radius: 1rem;
     background-color: rgb(117, 14, 146);
     color: white;
+    border: 1px solid white;
 }
 
 #GUI {
     position: absolute;
-    bottom: 80px;
+    top: calc(7rem + var(--navbar-height));
     left: 20px;
     z-index: 1000;
+}
+
+.content-area {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.nav-link.active {
+    color: blueviolet !important;
+}
+
+.dropdown-item.active {
+    color: white !important;
+}
+
+#about-page {
+    background-color: white;
 }
