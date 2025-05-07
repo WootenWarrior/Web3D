@@ -12,7 +12,6 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
 const loader = new GLTFLoader();
 const clock = new THREE.Clock();
 const listener = new THREE.AudioListener();
@@ -25,9 +24,7 @@ let animations = [];
 function init() {
     camera.position.z = 5;
     scene.add(ambientLight);
-    scene.add(directionalLight);
     renderer.setSize(width, height);
-    directionalLight.position.set(4,2,2);
     ambientLight.position.set(0,0,0);
     scene.background = new THREE.Color(0xffcc00);
     console.log("init")
@@ -74,12 +71,68 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
+let lights = {};
+lights.spot = new THREE.SpotLight(0xffffff, 1, 20);
+lights.spot.visible = true;
+lights.spot.position.set(0,5,0);
+lights.spotHelper = new THREE.SpotLightHelper(lights.spot);
+lights.spotHelper.visible = false;
+scene.add(lights.spot);
+scene.add(lights.spotHelper);
+
+let params = {
+    spot : {
+        enable: true,
+        color: 0xffffff,
+        intensity: 1,
+        distance: 20,
+        angle: Math.PI /2,
+        penumbra: 0,
+        helper: false,
+        moving: false
+    }
+}
+
+const gui = new dat.GUI({ autoplace: false });
+const guiContainer = document.getElementById('GUI');
+guiContainer.appendChild(gui.domElement);
+
+const spot = gui.addFolder('Spot Light');
+spot.open();
+spot.add(params.spot, 'enable').onChange(value =>
+    { lights.spot.visible = value });
+spot.addColor(params.spot, 'color').onChange(
+    value => lights.spot.color = new
+    THREE.Color(value));
+spot.add(params.spot,
+    'distance').min(0).max(20).onChange( value =>
+    lights.spot.distance = value);
+spot.add(params.spot,
+    'angle').min(0.1).max(6.28).onChange( value =>
+    lights.spot.angle = value );
+spot.add(params.spot,
+    'intensity').min(0.1).max(5).onChange( value =>
+    lights.spot.intensity = value );
+spot.add(params.spot,
+    'penumbra').min(0).max(1).onChange( value =>
+    lights.spot.penumbra = value );
+spot.add(params.spot, 'helper').onChange(value =>
+    lights.spotHelper.visible = value);
+spot.add(params.spot, 'moving');
+
 function animate() {
     if (activeModel) {
         const deltaTime = clock.getDelta();
         if (mixer && animations.length > 0) {
             mixer.update(deltaTime);
         }
+    }
+    
+    const time = clock.getElapsedTime();
+    const delta = Math.sin(time)*5;
+    if (params.spot.moving){
+        lights.spot.position.x = delta;
+        lights.spotHelper.update();
     }
 	renderer.render( scene, camera );
 }

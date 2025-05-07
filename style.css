@@ -52,15 +52,23 @@ canvas {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     gap: 2rem;
-    top: calc(50% - var(--navbar-height));
+    top: calc(2rem + var(--navbar-height));
     left: 2rem;
     z-index: 10;
 }
 
-#control-buttons .button {
-    width: 100px;
-    height: 100px;
+#control-buttons button {
+    height: 70px;
     border-radius: 1rem;
+    background-color: rgb(117, 14, 146);
+    color: white;
+}
+
+#GUI {
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    z-index: 1000;
 }
