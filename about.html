@@ -26,8 +26,65 @@
         <p class="text-left">For my website, I created a marketing website for a brand called: <span class="logo-font">Super Cola</span></p>
         <br>
         <h1 class="text-left mb-4">3D Models</h1>
-        <p>For this website, I created several 3D models in Blender as detailed in the subsections below.</p>
-        <h3 class="text-left mb-4">Bottle</h3>
+        <p>The three soda containers — a bottle, can, and cup — were first created in Blender. 
+            Each model was designed from scratch, focusing on smooth topology and clean geometry to ensure good performance on the web. 
+            I used Blender's modeling tools to shape the containers and applied basic materials to define their look.</p>
+        <img src="assets/blender.png" alt="blender-img" style="width: 800px; height: 400px;">
+        <br><br>
+        <h1 class="text-left mb-4">Animating in Blender</h1>
+        <p>
+            After modeling, I created simple animations for each container:
+            <ul>
+                <li>
+                    Open: the cap or lid animates off or the can is opened.
+                </li>
+                <li>
+                    Crush: the container deforms as if being crushed.
+                </li>
+            </ul>
+            Each animation was created using Blender's timeline and keyframing tools. Once done, 
+            I exported each variation — including the animations — using the glTF (.glb) format, which is efficient for web delivery and fully supports mesh animations.
+        </p>
+        <h1 class="text-left mb-4">Importing into my website</h1>
+        <p>
+            In the web app, I used the GLTFLoader from Three.js to load each model dynamically based on the current page (e.g., can.html, bottle.html, etc.). 
+            This keeps each view lightweight and focused.
+            I added logic to swap models and play their respective animations when buttons like "Open", "Crush", or "Reset" are clicked. 
+            The animations are played using the AnimationMixer from Three.js, and transitions are smooth and responsive.
+        </p>
+        <h1 class="text-left mb-4">Interactive controls</h1>
+        <img src="assets/controls.png" alt="controls">
+        <p>
+            The page includes OrbitControls, allowing users to rotate and inspect the models from all angles. I also implemented buttons to trigger animations:
+            <ul>
+                <li>
+                    Open: plays the lid-removal animation.
+                </li>
+                <li>
+                    Crush: triggers a deformation animation.
+                </li>
+                <li>
+                    Toggle Wireframe: toggles on and off the wireframe view.
+                </li>
+                <li>
+                    Reset: reloads the original model.
+                </li>
+            </ul>
+        </p>
+        <h1 class="text-left mb-4">Lighting and Sound</h1>
+        <p>
+            To enhance realism, I added
+            a Directional Light to simulate sunlight and
+            an Ambient Light for soft shadows and even illumination.
+            These lights help highlight the model's shapes and give a better sense of depth.
+        </p>
+        <br>
+        <p>
+            When the user triggers certain actions (like opening a bottle), corresponding sound effects are played using JavaScript's Audio API. 
+            These are short clips synced to the animations, adding an extra sensory layer to the interaction.
+        </p>
+        <br><br>
+        <h1 class="text-left mb-4">Testing</h1>
     </div>
 
     <footer class="bg-dark text-white text-center py-3 mt-auto">
